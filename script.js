@@ -1,91 +1,54 @@
-// ===============================
-// Website Open Tracking
-// ===============================
+console.log("❤️ Script loaded");
+
+
+// Website opened tracking
 
 window.addEventListener("load", () => {
 
+
     fetch("/api/opened", {
-        method: "GET",
-        cache: "no-store"
+
+        method:"GET",
+
+        cache:"no-store"
+
     })
-    .then(response => response.json())
+
+    .then(res => res.json())
+
     .then(data => {
 
-        console.log("Open event sent ❤️");
+        console.log(
+            "Website open tracked ❤️"
+        );
 
     })
-    .catch(error => {
+
+    .catch(err => {
 
         console.log(
-            "Open tracking failed:",
-            error
+            "Open tracking error:",
+            err
         );
 
     });
+
 
 });
 
 
 
 
-// ===============================
-// Open Story Button
-// ===============================
+
+// Open story button
 
 function openStory(){
 
     document
     .getElementById("story")
     .scrollIntoView({
+
         behavior:"smooth"
-    });
-
-}
-
-
-
-
-// ===============================
-// Not Yet Button
-// ===============================
-
-const noButton = document.getElementById("no");
-
-let moveCount = 0;
-
-
-if(noButton){
-
-    noButton.addEventListener("mouseover",()=>{
-
-
-        moveCount++;
-
-
-        if(moveCount < 5){
-
-            noButton.style.position = "fixed";
-
-            noButton.style.left =
-            Math.random()*80 + "vw";
-
-
-            noButton.style.top =
-            Math.random()*80 + "vh";
-
-
-        }
-        else{
-
-            noButton.innerHTML =
-            "Okay 🥺";
-
-
-            noButton.style.position =
-            "relative";
-
-        }
-
 
     });
 
@@ -94,68 +57,121 @@ if(noButton){
 
 
 
-// ===============================
-// YES Button
-// ===============================
+
+// No button movement
+
+const no =
+document.getElementById("no");
 
 
-const yesButton =
+let count = 0;
+
+
+if(no){
+
+
+no.addEventListener("mouseover",()=>{
+
+
+    count++;
+
+
+    if(count <= 5){
+
+
+        no.style.position="fixed";
+
+
+        no.style.left =
+        Math.random()*80+"vw";
+
+
+        no.style.top =
+        Math.random()*80+"vh";
+
+
+    }
+
+    else{
+
+
+        no.innerHTML =
+        "Okay 🥺";
+
+
+        no.style.position="relative";
+
+    }
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+// YES button
+
+const yes =
 document.getElementById("yes");
 
 
-
-if(yesButton){
-
-    yesButton.addEventListener("click",()=>{
+if(yes){
 
 
-        fetch("/api/yes", {
+yes.addEventListener("click",()=>{
 
-            method:"POST",
 
-            headers:{
-                "Content-Type":"application/json"
-            },
+    fetch("/api/yes",{
 
-            body: JSON.stringify({
+        method:"POST",
 
-                clicked:true
+        headers:{
 
-            })
+            "Content-Type":
+            "application/json"
 
-        })
+        },
 
-        .then(response=>response.json())
+        body:JSON.stringify({
 
-        .then(data=>{
-
-            console.log(
-                "YES event sent ❤️"
-            );
+            clicked:true
 
         })
 
-        .catch(error=>{
 
-            console.log(
-                "YES tracking failed:",
-                error
-            );
+    })
 
-        });
+    .then(res=>res.json())
+
+    .then(()=>{
 
 
-
-        document
-        .getElementById("question")
-        .style.display="none";
-
-
-        document
-        .getElementById("success")
-        .style.display="flex";
+        console.log(
+            "YES tracked ❤️"
+        );
 
 
     });
+
+
+
+    document
+    .getElementById("question")
+    .style.display="none";
+
+
+    document
+    .getElementById("success")
+    .style.display="flex";
+
+
+});
+
 
 }
