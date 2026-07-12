@@ -1,12 +1,15 @@
-console.log("❤️ Script loaded");
+console.log("SCRIPT LOADED ❤️");
+
 
 
 // Website opened tracking
 
-window.addEventListener("load", () => {
+window.addEventListener(
+"load",
+()=>{
 
 
-    fetch("/api/opened", {
+    fetch("/api/opened",{
 
         method:"GET",
 
@@ -14,27 +17,32 @@ window.addEventListener("load", () => {
 
     })
 
-    .then(res => res.json())
+    .then(response=>response.json())
 
-    .then(data => {
+    .then(data=>{
+
 
         console.log(
-            "Website open tracked ❤️"
+            "OPEN EVENT SENT"
         );
+
 
     })
 
-    .catch(err => {
+    .catch(error=>{
+
 
         console.log(
-            "Open tracking error:",
-            err
+            "OPEN ERROR:",
+            error
         );
+
 
     });
 
 
 });
+
 
 
 
@@ -44,6 +52,7 @@ window.addEventListener("load", () => {
 
 function openStory(){
 
+
     document
     .getElementById("story")
     .scrollIntoView({
@@ -52,7 +61,9 @@ function openStory(){
 
     });
 
+
 }
+
 
 
 
@@ -60,52 +71,54 @@ function openStory(){
 
 // No button movement
 
-const no =
+const noButton =
 document.getElementById("no");
 
 
-let count = 0;
+let moves = 0;
 
 
-if(no){
+if(noButton){
 
 
-no.addEventListener("mouseover",()=>{
+noButton.addEventListener(
+"mouseover",
+()=>{
 
 
-    count++;
+moves++;
 
 
-    if(count <= 5){
+if(moves < 5){
 
 
-        no.style.position="fixed";
+noButton.style.position="fixed";
 
 
-        no.style.left =
-        Math.random()*80+"vw";
+noButton.style.left =
+Math.random()*80 + "vw";
 
 
-        no.style.top =
-        Math.random()*80+"vh";
+noButton.style.top =
+Math.random()*80 + "vh";
 
 
-    }
-
-    else{
-
-
-        no.innerHTML =
-        "Okay 🥺";
+}
+else{
 
 
-        no.style.position="relative";
+noButton.innerHTML =
+"Okay 🥺";
 
-    }
+
+noButton.style.position =
+"relative";
+
+
+}
 
 
 });
-
 
 }
 
@@ -117,14 +130,18 @@ no.addEventListener("mouseover",()=>{
 
 // YES button
 
-const yes =
+
+const yesButton =
 document.getElementById("yes");
 
 
-if(yes){
+
+if(yesButton){
 
 
-yes.addEventListener("click",()=>{
+yesButton.addEventListener(
+"click",
+()=>{
 
 
     fetch("/api/yes",{
@@ -144,7 +161,6 @@ yes.addEventListener("click",()=>{
 
         })
 
-
     })
 
     .then(res=>res.json())
@@ -153,7 +169,18 @@ yes.addEventListener("click",()=>{
 
 
         console.log(
-            "YES tracked ❤️"
+            "YES EVENT SENT ❤️"
+        );
+
+
+    })
+
+    .catch(err=>{
+
+
+        console.log(
+            "YES ERROR:",
+            err
         );
 
 
@@ -164,6 +191,7 @@ yes.addEventListener("click",()=>{
     document
     .getElementById("question")
     .style.display="none";
+
 
 
     document
