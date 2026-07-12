@@ -5,15 +5,28 @@ const app = express();
 
 const PORT = process.env.PORT || 80;
 
-
 app.use(express.json());
 
 
-// Serve root files
+// Request logger
+app.use((req, res, next) => {
+
+    console.log(
+        "REQUEST:",
+        req.method,
+        req.url
+    );
+
+    next();
+
+});
+
+
+// Serve HTML CSS JS
 app.use(express.static(__dirname));
 
 
-// Website opened log
+// Website opened
 app.get("/api/opened", (req, res) => {
 
     console.log(
@@ -28,7 +41,7 @@ app.get("/api/opened", (req, res) => {
 });
 
 
-// YES clicked log
+// YES clicked
 app.post("/api/yes", (req, res) => {
 
     console.log(
@@ -43,7 +56,7 @@ app.post("/api/yes", (req, res) => {
 });
 
 
-// fallback to index.html
+// Always return index
 app.get("*", (req, res) => {
 
     res.sendFile(
@@ -56,7 +69,7 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
 
     console.log(
-        `Server running on port ${PORT}`
+        "Server running on port " + PORT
     );
 
 });
