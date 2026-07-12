@@ -1,3 +1,26 @@
+// ================================
+// Back4App Configuration
+// ================================
+
+
+// Replace these with your keys
+
+Parse.initialize(
+    "2dKeGdhUZo4lXLACkSrBmyhkm4BR4yqRA3FT9trx",
+    "eQGefzQjGURXcVLOPCkyervAw8KXkHby0SC2yuRG"
+);
+
+
+Parse.serverURL =
+"https://parseapi.back4app.com/";
+
+
+
+
+// ================================
+// Scroll button
+// ================================
+
 function scrollToStory(){
 
     document
@@ -10,69 +33,84 @@ function scrollToStory(){
 
 
 
-// Reveal animations
 
-const cards=document.querySelectorAll(".reveal");
+
+// ================================
+// Scroll reveal animation
+// ================================
+
+
+const cards =
+document.querySelectorAll(".reveal");
 
 
 window.addEventListener("scroll",()=>{
 
 
-cards.forEach(card=>{
+    cards.forEach(card=>{
 
 
-let position=
-card.getBoundingClientRect().top;
+        let top =
+        card.getBoundingClientRect().top;
 
 
-if(position < window.innerHeight-100){
+        if(top < window.innerHeight - 100){
 
-card.classList.add("active");
+            card.classList.add("active");
 
-}
+        }
+
+
+    });
 
 
 });
 
 
-});
 
 
 
 
+// ================================
 // Floating hearts
+// ================================
+
 
 function createHeart(){
 
-let heart=document.createElement("div");
 
-heart.innerHTML="❤️";
-
-heart.className="heart-float";
+    let heart =
+    document.createElement("div");
 
 
-heart.style.left=
-Math.random()*100+"vw";
+    heart.innerHTML="❤️";
 
 
-heart.style.fontSize=
-Math.random()*20+15+"px";
+    heart.className="heart-float";
 
 
-document
-.body
-.appendChild(heart);
+    heart.style.left =
+    Math.random()*100+"vw";
+
+
+    heart.style.fontSize =
+    Math.random()*20+15+"px";
 
 
 
-setTimeout(()=>{
+    document.body.appendChild(heart);
 
-heart.remove();
 
-},6000);
+
+    setTimeout(()=>{
+
+        heart.remove();
+
+    },6000);
 
 
 }
+
 
 
 setInterval(createHeart,500);
@@ -80,71 +118,56 @@ setInterval(createHeart,500);
 
 
 
-// No button playful movement
 
-const no=document.getElementById("no");
 
-let count=0;
+
+// ================================
+// Not Yet button
+// ================================
+
+
+const no =
+document.getElementById("no");
+
+
+let moves = 0;
+
 
 
 no.addEventListener("mouseover",()=>{
 
 
-count++;
+    moves++;
 
 
-if(count<6){
+    if(moves < 6){
 
 
-no.style.position="fixed";
+        no.style.position="fixed";
 
 
-no.style.left=
-Math.random()*80+"vw";
+        no.style.left =
+        Math.random()*80+"vw";
 
 
-no.style.top=
-Math.random()*80+"vh";
+        no.style.top =
+        Math.random()*80+"vh";
 
 
-}
+    }
 
 
-else{
+    else{
 
 
-no.innerHTML="Okay... 🥺";
-
-no.style.position="relative";
-
-
-}
+        no.innerHTML =
+        "Okay... 🥺";
 
 
-});
+        no.style.position="relative";
 
 
-
-
-// Yes button
-
-const yes=document.getElementById("yes");
-
-
-yes.addEventListener("click",()=>{
-
-
-document.querySelector(".question")
-.style.display="none";
-
-
-document
-.getElementById("success")
-.style.display="flex";
-
-
-
-confetti();
+    }
 
 
 });
@@ -152,61 +175,156 @@ confetti();
 
 
 
-// Simple confetti
+
+
+
+// ================================
+// YES Button
+// ================================
+
+
+const yes =
+document.getElementById("yes");
+
+
+
+yes.addEventListener("click", async ()=>{
+
+
+    // Save response to Back4App
+
+    const ApologyResponse =
+    Parse.Object.extend("ApologyResponse");
+
+
+    const response =
+    new ApologyResponse();
+
+
+
+    response.set(
+        "answer",
+        "yes"
+    );
+
+
+
+    try{
+
+
+        await response.save();
+
+
+        console.log(
+            "Saved ❤️"
+        );
+
+
+    }
+
+    catch(error){
+
+
+        console.log(
+            "Save failed:",
+            error.message
+        );
+
+
+    }
+
+
+
+
+
+    document
+    .querySelector(".question")
+    .style.display="none";
+
+
+
+    document
+    .getElementById("success")
+    .style.display="flex";
+
+
+
+    confetti();
+
+
+});
+
+
+
+
+
+
+
+// ================================
+// Heart Confetti
+// ================================
+
 
 function confetti(){
 
 
-for(let i=0;i<100;i++){
+    for(let i=0;i<100;i++){
 
 
-let piece=document.createElement("div");
+        let heart =
+        document.createElement("div");
 
 
-piece.innerHTML="❤️";
+        heart.innerHTML="❤️";
 
 
-piece.style.position="fixed";
-
-piece.style.left=
-Math.random()*100+"vw";
+        heart.style.position="fixed";
 
 
-piece.style.top="-20px";
+        heart.style.left =
+        Math.random()*100+"vw";
 
 
-piece.style.fontSize=
-Math.random()*25+10+"px";
+        heart.style.top="-20px";
 
 
-piece.style.transition="3s";
+        heart.style.fontSize =
+        Math.random()*25+10+"px";
 
 
-document.body.appendChild(piece);
+        heart.style.transition="3s";
 
 
-
-setTimeout(()=>{
-
-piece.style.top="100vh";
-
-piece.style.transform=
-`rotate(${Math.random()*720}deg)`;
-
-
-},100);
+        document.body.appendChild(heart);
 
 
 
-setTimeout(()=>{
-
-piece.remove();
-
-},4000);
+        setTimeout(()=>{
 
 
+            heart.style.top =
+            "100vh";
 
-}
+
+            heart.style.transform =
+            `rotate(${Math.random()*720}deg)`;
+
+
+        },100);
+
+
+
+        setTimeout(()=>{
+
+
+            heart.remove();
+
+
+        },4000);
+
+
+
+    }
 
 
 }
