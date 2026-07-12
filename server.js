@@ -5,6 +5,8 @@ const app = express();
 
 const PORT = process.env.PORT || 80;
 
+
+// JSON body support
 app.use(express.json());
 
 
@@ -22,54 +24,104 @@ app.use((req, res, next) => {
 });
 
 
-// Serve HTML CSS JS
+// Handle OPTIONS
+app.use((req, res, next) => {
+
+    if(req.method === "OPTIONS"){
+
+        console.log("OPTIONS handled");
+
+        return res.sendStatus(200);
+
+    }
+
+    next();
+
+});
+
+
+
+// Serve frontend files
+
 app.use(express.static(__dirname));
 
 
+
+
+
 // Website opened
-app.get("/api/opened", (req, res) => {
+
+app.get("/api/opened", (req,res)=>{
+
 
     console.log(
-        "❤️ Website opened:",
+        "❤️ WEBSITE OPENED:",
         new Date().toISOString()
     );
 
+
     res.json({
-        success: true
+
+        success:true
+
     });
 
+
 });
+
+
+
+
 
 
 // YES clicked
-app.post("/api/yes", (req, res) => {
+
+app.post("/api/yes", (req,res)=>{
+
 
     console.log(
-        "🥹 YES clicked:",
+        "🥹 YES CLICKED:",
         new Date().toISOString()
     );
 
+
     res.json({
-        success: true
+
+        success:true
+
     });
+
 
 });
 
 
-// Always return index
-app.get("*", (req, res) => {
+
+
+
+
+// fallback
+
+app.get("*",(req,res)=>{
 
     res.sendFile(
-        path.join(__dirname, "index.html")
+        path.join(
+            __dirname,
+            "index.html"
+        )
     );
 
 });
 
 
-app.listen(PORT, () => {
+
+
+
+app.listen(PORT,()=>{
+
 
     console.log(
         "Server running on port " + PORT
     );
+
 
 });
