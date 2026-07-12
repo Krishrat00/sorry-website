@@ -1,27 +1,38 @@
-// ================================
-// Back4App Configuration
-// ================================
+// ===============================
+// Website Open Tracking
+// ===============================
+
+window.addEventListener("load", () => {
+
+    fetch("/api/opened", {
+        method: "GET",
+        cache: "no-store"
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log("Open event sent ❤️");
+
+    })
+    .catch(error => {
+
+        console.log(
+            "Open tracking failed:",
+            error
+        );
+
+    });
+
+});
 
 
-// Replace these with your keys
-
-Parse.initialize(
-    "2dKeGdhUZo4lXLACkSrBmyhkm4BR4yqRA3FT9trx",
-    "eQGefzQjGURXcVLOPCkyervAw8KXkHby0SC2yuRG"
-);
 
 
-Parse.serverURL =
-"https://parseapi.back4app.com/";
+// ===============================
+// Open Story Button
+// ===============================
 
-
-
-
-// ================================
-// Scroll button
-// ================================
-
-function scrollToStory(){
+function openStory(){
 
     document
     .getElementById("story")
@@ -34,297 +45,117 @@ function scrollToStory(){
 
 
 
+// ===============================
+// Not Yet Button
+// ===============================
 
-// ================================
-// Scroll reveal animation
-// ================================
+const noButton = document.getElementById("no");
 
-
-const cards =
-document.querySelectorAll(".reveal");
-
-
-window.addEventListener("scroll",()=>{
+let moveCount = 0;
 
 
-    cards.forEach(card=>{
+if(noButton){
+
+    noButton.addEventListener("mouseover",()=>{
 
 
-        let top =
-        card.getBoundingClientRect().top;
+        moveCount++;
 
 
-        if(top < window.innerHeight - 100){
+        if(moveCount < 5){
 
-            card.classList.add("active");
+            noButton.style.position = "fixed";
+
+            noButton.style.left =
+            Math.random()*80 + "vw";
+
+
+            noButton.style.top =
+            Math.random()*80 + "vh";
+
+
+        }
+        else{
+
+            noButton.innerHTML =
+            "Okay 🥺";
+
+
+            noButton.style.position =
+            "relative";
 
         }
 
 
     });
 
-
-});
-
-
-
-
-
-
-// ================================
-// Floating hearts
-// ================================
-
-
-function createHeart(){
-
-
-    let heart =
-    document.createElement("div");
-
-
-    heart.innerHTML="❤️";
-
-
-    heart.className="heart-float";
-
-
-    heart.style.left =
-    Math.random()*100+"vw";
-
-
-    heart.style.fontSize =
-    Math.random()*20+15+"px";
-
-
-
-    document.body.appendChild(heart);
-
-
-
-    setTimeout(()=>{
-
-        heart.remove();
-
-    },6000);
-
-
 }
 
 
 
-setInterval(createHeart,500);
 
-
-
-
-
-
-
-// ================================
-// Not Yet button
-// ================================
-
-
-const no =
-document.getElementById("no");
-
-
-let moves = 0;
-
-
-
-no.addEventListener("mouseover",()=>{
-
-
-    moves++;
-
-
-    if(moves < 6){
-
-
-        no.style.position="fixed";
-
-
-        no.style.left =
-        Math.random()*80+"vw";
-
-
-        no.style.top =
-        Math.random()*80+"vh";
-
-
-    }
-
-
-    else{
-
-
-        no.innerHTML =
-        "Okay... 🥺";
-
-
-        no.style.position="relative";
-
-
-    }
-
-
-});
-
-
-
-
-
-
-
-// ================================
+// ===============================
 // YES Button
-// ================================
+// ===============================
 
 
-const yes =
+const yesButton =
 document.getElementById("yes");
 
 
 
-yes.addEventListener("click", async ()=>{
+if(yesButton){
 
+    yesButton.addEventListener("click",()=>{
 
-    // Save response to Back4App
 
-    const ApologyResponse =
-    Parse.Object.extend("ApologyResponse");
+        fetch("/api/yes", {
 
+            method:"POST",
 
-    const response =
-    new ApologyResponse();
+            headers:{
+                "Content-Type":"application/json"
+            },
 
+            body: JSON.stringify({
 
+                clicked:true
 
-    response.set(
-        "answer",
-        "yes"
-    );
+            })
 
+        })
 
+        .then(response=>response.json())
 
-    try{
+        .then(data=>{
 
+            console.log(
+                "YES event sent ❤️"
+            );
 
-        await response.save();
+        })
 
+        .catch(error=>{
 
-        console.log(
-            "Saved ❤️"
-        );
+            console.log(
+                "YES tracking failed:",
+                error
+            );
 
+        });
 
-    }
 
-    catch(error){
 
+        document
+        .getElementById("question")
+        .style.display="none";
 
-        console.log(
-            "Save failed:",
-            error.message
-        );
 
+        document
+        .getElementById("success")
+        .style.display="flex";
 
-    }
 
-
-
-
-
-    document
-    .querySelector(".question")
-    .style.display="none";
-
-
-
-    document
-    .getElementById("success")
-    .style.display="flex";
-
-
-
-    confetti();
-
-
-});
-
-
-
-
-
-
-
-// ================================
-// Heart Confetti
-// ================================
-
-
-function confetti(){
-
-
-    for(let i=0;i<100;i++){
-
-
-        let heart =
-        document.createElement("div");
-
-
-        heart.innerHTML="❤️";
-
-
-        heart.style.position="fixed";
-
-
-        heart.style.left =
-        Math.random()*100+"vw";
-
-
-        heart.style.top="-20px";
-
-
-        heart.style.fontSize =
-        Math.random()*25+10+"px";
-
-
-        heart.style.transition="3s";
-
-
-        document.body.appendChild(heart);
-
-
-
-        setTimeout(()=>{
-
-
-            heart.style.top =
-            "100vh";
-
-
-            heart.style.transform =
-            `rotate(${Math.random()*720}deg)`;
-
-
-        },100);
-
-
-
-        setTimeout(()=>{
-
-
-            heart.remove();
-
-
-        },4000);
-
-
-
-    }
-
+    });
 
 }
