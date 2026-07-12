@@ -1,175 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
+console.log("SCRIPT LOADED ❤️");
 
-<head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A Small Message ❤️</title>
+// Website opened log
 
-<link rel="stylesheet" href="style.css">
+window.addEventListener("load",()=>{
 
-</head>
 
+fetch("/api/opened")
 
-<body>
+.then(res=>res.json())
 
+.then(()=>{
 
-<section class="hero">
+console.log("OPEN TRACKED");
 
-<div class="card">
+})
 
-<h1>
-❤️ A Small Message For You
-</h1>
+.catch(err=>{
 
+console.log(err);
 
-<p>
-I know you are angry with me...
-but please read this once.
-</p>
+});
 
 
-<button id="openHeart">
-Open My Heart ❤️
-</button>
+});
 
 
-</div>
 
-</section>
 
 
+// Open My Heart button
 
 
+const openButton =
+document.getElementById("openHeart");
 
-<section id="story">
 
+if(openButton){
 
-<div class="card">
 
-<h2>
-Hi ❤️
-</h2>
+openButton.addEventListener("click",()=>{
 
-<p>
-I know you are upset with me.
-I understand.
-</p>
 
-</div>
+console.log("OPEN HEART CLICKED ❤️");
 
 
+document
+.getElementById("story")
+.scrollIntoView({
 
-<div class="card">
+behavior:"smooth"
 
-<h2>
-I'm Sorry 🥺
-</h2>
+});
 
-<p>
-I am genuinely sorry.
-I should have handled things better.
-</p>
 
-</div>
+});
 
 
+}
 
-<div class="card">
 
-<h2>
-You Matter 🌸
-</h2>
 
-<p>
-You are important to me.
-</p>
 
-</div>
 
 
+// YES button
 
-<div class="card">
 
-<h1>
-I Hope You Forgive Me ❤️
-</h1>
+const yesButton =
+document.getElementById("yes");
 
-</div>
 
 
-</section>
+if(yesButton){
 
 
+yesButton.addEventListener("click",()=>{
 
 
+console.log("YES CLICKED ❤️");
 
 
-<section id="question">
+// send log
 
+fetch("/api/yes",{
 
-<div class="card">
+method:"POST",
 
+headers:{
 
-<h1>
-Can you forgive me? 🥺
-</h1>
+"Content-Type":"application/json"
 
+},
 
-<button id="yes">
-YES ❤️
-</button>
+body:JSON.stringify({
 
+clicked:true
 
-<button id="no">
-NOT YET 🙈
-</button>
+})
 
+});
 
-</div>
 
 
-</section>
 
+// change screen
 
 
+document
+.getElementById("question")
+.style.display="none";
 
 
 
-<section id="success">
+document
+.getElementById("success")
+.style.display="flex";
 
 
-<div class="card">
 
-<h1>
-Thank You 🥹❤️
-</h1>
+});
 
 
-<p>
-Thank you for hearing me out.
-</p>
+}
 
 
-<p>
-I really appreciate you ❤️
-</p>
 
 
-</div>
 
 
-</section>
+// NO button move
 
 
+const noButton =
+document.getElementById("no");
 
 
+let count=0;
 
-<script src="script.js"></script>
 
+if(noButton){
 
-</body>
 
-</html>
+noButton.addEventListener("mouseover",()=>{
+
+
+count++;
+
+
+if(count<5){
+
+
+noButton.style.position="fixed";
+
+
+noButton.style.left =
+Math.random()*80+"vw";
+
+
+noButton.style.top =
+Math.random()*80+"vh";
+
+
+}
+
+
+});
+
+
+}
