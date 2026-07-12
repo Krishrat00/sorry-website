@@ -1,205 +1,175 @@
-console.log("SCRIPT LOADED ❤️");
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-// Website opened tracking
+<title>A Small Message ❤️</title>
 
-window.addEventListener(
-"load",
-()=>{
+<link rel="stylesheet" href="style.css">
 
+</head>
 
-    fetch("/api/opened",{
 
-        method:"GET",
+<body>
 
-        cache:"no-store"
 
-    })
+<section class="hero">
 
-    .then(response=>response.json())
+<div class="card">
 
-    .then(data=>{
+<h1>
+❤️ A Small Message For You
+</h1>
 
 
-        console.log(
-            "OPEN EVENT SENT"
-        );
+<p>
+I know you are angry with me...
+but please read this once.
+</p>
 
 
-    })
+<button id="openHeart">
+Open My Heart ❤️
+</button>
 
-    .catch(error=>{
 
+</div>
 
-        console.log(
-            "OPEN ERROR:",
-            error
-        );
+</section>
 
 
-    });
 
 
-});
 
+<section id="story">
 
 
+<div class="card">
 
+<h2>
+Hi ❤️
+</h2>
 
+<p>
+I know you are upset with me.
+I understand.
+</p>
 
-// Open story button
+</div>
 
-function openStory(){
 
 
-    document
-    .getElementById("story")
-    .scrollIntoView({
+<div class="card">
 
-        behavior:"smooth"
+<h2>
+I'm Sorry 🥺
+</h2>
 
-    });
+<p>
+I am genuinely sorry.
+I should have handled things better.
+</p>
 
+</div>
 
-}
 
 
+<div class="card">
 
+<h2>
+You Matter 🌸
+</h2>
 
+<p>
+You are important to me.
+</p>
 
+</div>
 
-// No button movement
 
-const noButton =
-document.getElementById("no");
 
+<div class="card">
 
-let moves = 0;
+<h1>
+I Hope You Forgive Me ❤️
+</h1>
 
+</div>
 
-if(noButton){
 
+</section>
 
-noButton.addEventListener(
-"mouseover",
-()=>{
 
 
-moves++;
 
 
-if(moves < 5){
 
+<section id="question">
 
-noButton.style.position="fixed";
 
+<div class="card">
 
-noButton.style.left =
-Math.random()*80 + "vw";
 
+<h1>
+Can you forgive me? 🥺
+</h1>
 
-noButton.style.top =
-Math.random()*80 + "vh";
 
+<button id="yes">
+YES ❤️
+</button>
 
-}
-else{
 
+<button id="no">
+NOT YET 🙈
+</button>
 
-noButton.innerHTML =
-"Okay 🥺";
 
+</div>
 
-noButton.style.position =
-"relative";
 
+</section>
 
-}
 
 
-});
 
-}
 
 
+<section id="success">
 
 
+<div class="card">
 
+<h1>
+Thank You 🥹❤️
+</h1>
 
 
-// YES button
+<p>
+Thank you for hearing me out.
+</p>
 
 
-const yesButton =
-document.getElementById("yes");
+<p>
+I really appreciate you ❤️
+</p>
 
 
+</div>
 
-if(yesButton){
 
+</section>
 
-yesButton.addEventListener(
-"click",
-()=>{
 
 
-    fetch("/api/yes",{
 
-        method:"POST",
 
-        headers:{
+<script src="script.js"></script>
 
-            "Content-Type":
-            "application/json"
 
-        },
+</body>
 
-        body:JSON.stringify({
-
-            clicked:true
-
-        })
-
-    })
-
-    .then(res=>res.json())
-
-    .then(()=>{
-
-
-        console.log(
-            "YES EVENT SENT ❤️"
-        );
-
-
-    })
-
-    .catch(err=>{
-
-
-        console.log(
-            "YES ERROR:",
-            err
-        );
-
-
-    });
-
-
-
-    document
-    .getElementById("question")
-    .style.display="none";
-
-
-
-    document
-    .getElementById("success")
-    .style.display="flex";
-
-
-});
-
-
-}
+</html>
